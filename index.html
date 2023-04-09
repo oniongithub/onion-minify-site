@@ -1,26 +1,44 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Lua Code Minifier</title>
-    <script>
-      function minifyLua(code) {
-        let strippedCode = code.replace(/\s+/g, " ");
-        let minifiedCode = strippedCode.replace(/\s*([\(\)\{\}\[\],;])\s*/g, "$1");
-        minifiedCode = minifiedCode.replace(/;(\s*\})/g, "$1");
-        return minifiedCode;
-      }
+    <head>
+        <title>Lua Minification</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="styles/style.css">
+    </head>
+    <body>
+        <div class="center-text-div">
+            <h1>Lua Minification</h1>
+            <textarea id="code" rows="20" cols="100"></textarea>
+            <div style="width: 100%;"><button onclick="minify()">Minify</button></div>
+            <div class="center-div" style="width: 100%;"><div id="output-text" class="text-div"> </div></div>
+        </div>
+    
+        <script>
+            var output_element = document.getElementById("output-text");
 
-      function minify() {
-        let code = document.getElementById("code").value;
-        let minifiedCode = minifyLua(code);
-        document.getElementById("output").textContent = minifiedCode;
-      }
-    </script>
-  </head>
-  <body>
-    <h1>Lua Code Minifier</h1>
-    <textarea id="code" rows="10" cols="50"></textarea><br />
-    <button onclick="minify()">Minify</button><br />
-    <pre id="output"></pre>
-  </body>
+            function minifyLua(code) {
+                let strippedCode = code.replace(/\s+/g, " ");
+                let minifiedCode = strippedCode.replace(/\s*([\(\)\{\}\[\],;])\s*/g, "$1");
+                minifiedCode = minifiedCode.replace(/;(\s*\})/g, "$1");
+                return minifiedCode;
+            }
+      
+            function minify() {
+                let code = document.getElementById("code").value;
+                let minifiedCode = minifyLua(code);
+                output_element.innerHTML = "<button onclick=\"copy_text()\">Copy</button> <br/> <textarea id=\"output\" rows=\"20\" cols=\"100\"></textarea>";
+                output_element.style.padding = "12px";
+
+                let new_element = document.getElementById("output");
+                new_element.value = minifiedCode;
+            }
+
+            function copy_text() {
+                var text_element = document.getElementById("output");
+                if (text_element) { navigator.clipboard.writeText(text_element.value); }
+            }
+        </script>
+    </body>
 </html>
