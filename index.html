@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Lua Code Minifier</title>
+    <script>
+      function minifyLua(code) {
+        let strippedCode = code.replace(/\s+/g, " ");
+        let minifiedCode = strippedCode.replace(/\s*([\(\)\{\}\[\],;])\s*/g, "$1");
+        minifiedCode = minifiedCode.replace(/;(\s*\})/g, "$1");
+        return minifiedCode;
+      }
+
+      function minify() {
+        let code = document.getElementById("code").value;
+        let minifiedCode = minifyLua(code);
+        document.getElementById("output").textContent = minifiedCode;
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Lua Code Minifier</h1>
+    <textarea id="code" rows="10" cols="50"></textarea><br />
+    <button onclick="minify()">Minify</button><br />
+    <pre id="output"></pre>
+  </body>
+</html>
